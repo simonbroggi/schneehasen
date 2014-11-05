@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   width="744.09448"
+   height="1052.3622"
+   id="svg2">
+  <defs
+     id="defs4">
+    <clipPath
+       id="clipPath3018">
+      <path
+         d="m 0,841.89 595.276,0 L 595.276,0 0,0 0,841.89 z"
+         id="path3020" />
+    </clipPath>
+  </defs>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1">
+    <rect
+       width="999.05103"
+       height="999.05103"
+       x="-131.45407"
+       y="144.76521"
+       id="rect3033"
+       style="fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:0.94900084;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <g
+       transform="matrix(1.25,0,0,-1.25,-5.9826312,1205.4591)"
+       id="g3012">
+      <g
+         id="g3014">
+        <g
+           clip-path="url(#clipPath3018)"
+           id="g3016">
+          <g
+             transform="translate(14.6928,718.5849)"
+             id="g3022">
+            <path
+               d="m 0,0 8,0 c 0,0 47,-14 75,-41 28,-27 39,-57 39,-57 0,0 0,43 11,56 11,13 37,68 46,72 9,4 24,7 30,3 0,0 11,-18 12,-48 1,-30 -10,-60 -11,-67 -1,-7 -7,-32 -15,-38 -8,-6 -1,-29 -1,-29 0,0 15,-20 21,-27 6,-7 6.064,-25 6.064,-25 0,0 30.936,-7 44.936,-8 14,-1 52,16 113,-8 61,-24 104,-71 127,-108 23,-37 42,-94 35,-135 -7,-41 -28,-109 -28,-109 0,0 -40,-17 -51,-18 -11,-1 -29,-10 -36,0 -7,10 -25,25 -38,23 -13,-2 -20,-9 -31,-9 -11,0 -60,7 -65,9 -5,2 -34,7 -39,7 -5,0 -23,-9 -26,-9 -3,0 -12,17 -14,23 -2,6 4,23 -1,32 -5,9 -41,18 -51,25 -10,7 -5,32 -16,40 -11,8 -29,26 -34,36 -5,10 -22,48 -22,53 0,5 -2,39 -2,43 0,4 -5,21 -5,21 0,0 -16,5.214 -17,14.607 -1,9.393 3,31.393 4,34.393 1,3 2,19 2,24 0,5 4,15 4,15 0,0 -10,21 -8,28 2,7 6,19 10,23 4,4 9,12 9,12 0,0 -5,14 -11,18 -6,4 -22,39 -31,52 C 35,-59 0,0 0,0"
+               id="path3024"
+               style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none" />
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

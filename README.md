@@ -16,5 +16,5 @@ Die Hasen flüchten jeweils von dem Versteck in dessen Nähe es mehr Bewegung vo
 In den Verstecken werden Sensoren angebracht die via mini Computer (Raspberry Pi) und Relais die Lichtkasten steuern. Ein Lichtkasten braucht 220V AC und max 40W. Steuerung und Sensoren brauchen relativ wenig Strom. Die gesamte Installation wird mit ca 1200W auskommen (Vermutlich weniger).
 
 
-![firstBox](https://raw.githubusercontent.com/simonbroggi/schneehasen/master/doku/first_rabbit.jpg)
+![firstBox](https://raw.githubusercontent.com/simonbroggi/schneehasen/master/doku/first_box_with_light.jpg)
 ![firstRabbit](https://raw.githubusercontent.com/simonbroggi/schneehasen/master/doku/first_rabbit.jpg)

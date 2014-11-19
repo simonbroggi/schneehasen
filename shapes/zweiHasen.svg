@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1736.2205"
+   height="3330.7085"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="zweiHasen_robomaster.dxf">
+  <defs
+     id="defs4">
+    <clipPath
+       id="clipPath3018"
+       clipPathUnits="userSpaceOnUse">
+      <path
+         id="path3020"
+         d="m 0,841.89 595.276,0 L 595.276,0 0,0 0,841.89 z"
+         inkscape:connector-curvature="0" />
+    </clipPath>
+    <clipPath
+       id="clipPath3031"
+       clipPathUnits="userSpaceOnUse">
+      <path
+         id="path3033"
+         d="m 91.32,623.585 540.771,0 0,-421.823 -540.771,0 0,421.823 z"
+         inkscape:connector-curvature="0" />
+    </clipPath>
+    <clipPath
+       id="clipPath3023"
+       clipPathUnits="userSpaceOnUse">
+      <path
+         id="path3025"
+         d="m 0,841.89 704.693,0 L 704.693,0 0,0 0,841.89 z"
+         inkscape:connector-curvature="0" />
+    </clipPath>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.175"
+     inkscape:cx="856.23126"
+     inkscape:cy="1963.2584"
+     inkscape:document-units="cm"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:window-width="1595"
+     inkscape:window-height="860"
+     inkscape:window-x="121"
+     inkscape:window-y="84"
+     inkscape:window-maximized="0"
+     units="cm">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3056"
+       empspacing="5"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true"
+       units="cm"
+       spacingx="2cm"
+       spacingy="2cm" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,2278.3466)">
+    <use
+       x="0"
+       y="0"
+       xlink:href="#rect3033"
+       id="use3058"
+       transform="translate(2.9379926e-7,-1594.4882)"
+       width="1736.2205"
+       height="3330.7085" />
+    <rect
+       style="fill:#515151;fill-opacity:1;stroke:#ffffff;stroke-width:1.20472443;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3033"
+       width="1593.3"
+       height="1593.3"
+       x="71.46022"
+       y="-612.39838"
+       rx="42.519684"
+       ry="42.519684" />
+    <g
+       transform="matrix(2.1489531,0,0,-2.1489531,254.58334,1130.2032)"
+       inkscape:label="Schneehase_Maske1"
+       id="g3012">
+      <g
+         id="g3014">
+        <g
+           clip-path="url(#clipPath3018)"
+           id="g3016">
+          <g
+             transform="translate(14.6928,718.5849)"
+             id="g3022">
+            <path
+               id="path3024"
+               style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+               d="m 0,0 8,0 c 0,0 47,-14 75,-41 28,-27 39,-57 39,-57 0,0 0,43 11,56 11,13 37,68 46,72 9,4 24,7 30,3 0,0 11,-18 12,-48 1,-30 -10,-60 -11,-67 -1,-7 -7,-32 -15,-38 -8,-6 -1,-29 -1,-29 0,0 15,-20 21,-27 6,-7 6.064,-25 6.064,-25 0,0 30.936,-7 44.936,-8 14,-1 52,16 113,-8 61,-24 104,-71 127,-108 23,-37 42,-94 35,-135 -7,-41 -28,-109 -28,-109 0,0 -40,-17 -51,-18 -11,-1 -29,-10 -36,0 -7,10 -25,25 -38,23 -13,-2 -20,-9 -31,-9 -11,0 -60,7 -65,9 -5,2 -34,7 -39,7 -5,0 -23,-9 -26,-9 -3,0 -12,17 -14,23 -2,6 4,23 -1,32 -5,9 -41,18 -51,25 -10,7 -5,32 -16,40 -11,8 -29,26 -34,36 -5,10 -22,48 -22,53 0,5 -2,39 -2,43 0,4 -5,21 -5,21 0,0 -16,5.214 -17,14.607 -1,9.393 3,31.393 4,34.393 1,3 2,19 2,24 0,5 4,15 4,15 0,0 -10,21 -8,28 2,7 6,19 10,23 4,4 9,12 9,12 0,0 -5,14 -11,18 -6,4 -22,39 -31,52 C 35,-59 0,0 0,0"
+               inkscape:connector-curvature="0" />
+          </g>
+        </g>
+      </g>
+    </g>
+    <g
+       transform="matrix(2.4898844,0,0,-2.4898844,-32.494354,-287.79373)"
+       inkscape:label="Schneehase_Maske2"
+       id="g3017"
+       style="fill:#ffffff;fill-opacity:1">
+      <g
+         id="g3019"
+         style="fill:#ffffff;fill-opacity:1">
+        <g
+           clip-path="url(#clipPath3023)"
+           id="g3021"
+           style="fill:#ffffff;fill-opacity:1">
+          <g
+             id="g3027"
+             style="fill:#ffffff;fill-opacity:1">
+            <g
+               id="g3029"
+               style="fill:#ffffff;fill-opacity:1" />
+            <g
+               id="g3035"
+               style="fill:#ffffff;fill-opacity:1">
+              <g
+                 id="g3037"
+                 clip-path="url(#clipPath3031)"
+                 style="opacity:0.25000000000000000;fill:#ffffff;fill-opacity:1">
+                <g
+                   id="g3039"
+                   transform="translate(304.0261,234.9182)"
+                   style="fill:#ffffff;fill-opacity:1">
+                  <path
+                     id="path3041"
+                     style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                     d="m 0,0 c -3.333,0 -8,-4 -13.333,4.667 -5.334,8.666 12,39.333 12,39.333 L -24,48.667 -40,45.333 -74,8.667 c 0,0 -14.667,-34 -16.667,-36.667 -2,-2.667 -44.666,-7.333 -51.333,-4 -6.667,3.333 -0.667,25.333 -0.667,25.333 0,0 9.334,9.334 18.667,15.334 9.333,6 32.667,32.666 32.667,37.333 0,4.667 4,17.333 4,17.333 l -10,-8.666 0.666,10.666 -8.666,-9.333 4.666,24 -5.333,8.667 c 0,0 -12.667,-5.334 -22,-6.667 -9.333,-1.333 -32,-6.667 -38.667,-6 -6.666,0.667 -23.333,0 -29.333,7.333 -6,7.334 -11.333,20 -11.333,22.667 0,2.667 -1.334,15.333 0,20 1.333,4.667 3.333,19.333 2.666,22 -0.666,2.667 -8.666,20.667 -8,25.333 0.667,4.667 6,19.334 8,22.667 2,3.333 17.334,22 18.667,26.667 1.333,4.666 6.667,26 6.667,26 0.666,8 -10,30.666 -10,36.666 0,6 4.696,17.334 5.015,21.334 0.318,4 -5.015,15.333 -5.015,22.666 0,7.334 8.666,47.334 14.666,52 6,4.667 16.667,7.334 18.667,7.334 2,0 7.333,-2 10,-4.667 2.667,-2.667 9.333,-22 10.667,-26 1.333,-4 4,-18 4,-18 0,0 22.666,34.667 26.666,36.667 4,2 5.334,0 7.334,-2.667 2,-2.667 0.666,-52.667 0,-62.667 -0.667,-10 2.112,-30 1.056,-36.666 C -97.333,268 -101.333,256 -101.333,256 c 0,0 86,62 100.666,71.333 14.667,9.334 76,36.667 114.667,40 38.667,3.334 93.333,-3.333 114,-11.333 20.667,-8 61.333,-28 70,-37.333 8.667,-9.334 14,-25.334 16.667,-32.667 2.666,-7.333 12.666,-29.333 13.333,-44.667 0.667,-15.333 -4,-43.28 -6,-55.306 -2,-12.027 -6,-32.694 -14.667,-44.694 -8.666,-12 -36,-22 -40.666,-24 -4.667,-2 -42.667,-11.333 -46,-12 -3.334,-0.666 -14,0 -14,0 L 208,88.667 c 0,0 -1.333,-12.667 0.667,-16.667 2,-4 6.666,-17.333 6.666,-17.333 0,0 -8,-13.334 -14,-16.667 -6,-3.333 -32,-20 -32,-20 0,0 -36.666,-4 -39.333,-3.333 -2.667,0.666 -20.667,-10 -20.667,-10 0,0 -6.666,-6.667 -8.666,-6.667 l -7.334,0 c 0,0 -15.333,-10 -20,-10 -4.666,0 -16,0.667 -20,0 -4,-0.667 -8.666,8 -8.666,8 0,0 1.307,18 3.653,21.333 2.347,3.334 10.347,17.334 13.013,18 C 64,36 84.667,47.333 92,48.667 c 7.333,1.333 40,8 42,8 2,0 16.667,5.333 18,8.666 1.333,3.334 0.667,34 -2.667,35.334 -3.333,1.333 -14,5.333 -14,5.333 0,0 -30,-8.667 -37.333,-8.667 -7.333,0 -28,-12 -31.333,-12.666 C 63.333,84 52.641,59.333 48.32,52 44,44.667 40.017,8.082 41.333,16.667 42.649,25.252 31.629,4.789 20,0 12.159,-3.229 1.342,0 0,0"
+                     inkscape:connector-curvature="0" />
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

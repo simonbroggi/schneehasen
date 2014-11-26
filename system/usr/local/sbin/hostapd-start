@@ -1,0 +1,14 @@
+#!/bin/bash
+INTERFACE=wlan0
+sed -e "s/@INTERFACE@/$INTERFACE/g" \
+        < /etc/hostapd/hostapd.conf \
+        > /etc/hostapd/hostapd-$INTERFACE.conf
+
+if [ ! -d /var/run/hostapd ]; then
+        rm -rf /var/run/hostapd
+        mkdir /var/run/hostapd
+fi
+
+/usr/local/sbin/hostapd -B -P /var/run/hostapd/$INTERFACE.pid /etc/hostapd/hostapd-$INTERFACE.conf
+brctl addif br0 $INTERFACE
+

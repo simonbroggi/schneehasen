@@ -1,0 +1,47 @@
+auto lo
+iface lo inet loopback
+
+iface default inet dhcp
+
+
+# configure dhcp,ipv6 on ethernet port eth0
+auth eth0
+allow-hotplug eth0
+iface eth0 inet dhcp
+iface eth0 inet6 auto
+
+# this config is for wlan internet access (clients)
+# see https://wiki.debian.org/WiFi/HowToUse
+#auto wlan0
+#iface wlan0 inet dhcp
+#        wpa-ssid Schneehasen
+#        # $ wpa_passphrase myssid my_very_secret_passphrase
+#        wpa-psk cb8d15142e03eff4d2181d0374be714d69a0451da09a5f21fbc79c2409e3e682
+
+# this config is for adhoc wireless networking -> not used!
+# see https://wiki.debian.org/WiFi/AdHoc
+#auto wlan0
+#iface wlan0 inet static
+#	address 192.168.2.1
+#	netmask 255.255.255.0
+#	wireless-channel 1
+#	wireless-essid Schneehasen 
+#	wireless-mode ad-hoc
+
+
+# this config is for access point (master!)
+allow-hotplug wlan0
+iface wlan0 inet manual
+
+# bridge to access internet from wlan (using lan)
+auto br0
+iface br0 inet static
+        address 10.0.0.1
+        netmask 255.255.255.0
+        network 10.0.0.0
+        broadcast 10.0.0.255
+        bridge_ports none
+        bridge_fd 1
+        bridge_hello 1
+        bridge_stp on
+

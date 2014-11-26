@@ -1,0 +1,3 @@
+ACTION=="add", SUBSYSTEM=="net", ENV{ID_VENDOR_ID}=="0bda", ENV{ID_MODEL_ID}=="8176", RUN+="/usr/local/sbin/hostapd-start"
+ACTION=="remove", SUBSYSTEM=="net", ENV{ID_VENDOR_ID}=="0bda", ENV{ID_MODEL_ID}=="8176", RUN+="/usr/local/sbin/hostapd-stop"
+

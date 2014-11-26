@@ -1,0 +1,9 @@
+#!/bin/bash
+INTERFACE=wlan0
+if [ -e /var/run/hostapd/$INTERFACE.pid ]; then
+        read pid < /var/run/hostapd/$INTERFACE.pid
+        if [ x$pid != x ]; then
+                kill $pid
+        fi
+fi
+

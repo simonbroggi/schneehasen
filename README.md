@@ -2,7 +2,7 @@ schneehasen
 ============
 
 
-Installation mit 30 Lichtkästen bauen (je ca 40 cm Seitenlänge)
+Installation mit 30 Lichtkästen (je ca 40 cm Seitenlänge)
 
 ![animgif](https://raw.githubusercontent.com/simonbroggi/schneehasen/master/doku/schneehasen.gif)
 

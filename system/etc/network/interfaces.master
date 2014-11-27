@@ -41,4 +41,5 @@ iface wlan0 inet static
 
 # routing from wlan to eth0
 up iptables-restore < /etc/iptables.ipv4.nat
+up sysctl -w net.ipv4.ip_forward=1
 

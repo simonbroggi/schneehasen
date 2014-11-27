@@ -43,3 +43,4 @@ iface wlan0 inet static
 up iptables-restore < /etc/iptables.ipv4.nat
 up sysctl -w net.ipv4.ip_forward=1
 
+

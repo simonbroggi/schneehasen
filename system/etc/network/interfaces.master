@@ -31,17 +31,21 @@ iface eth0 inet6 auto
 
 # this config is for access point (master!)
 allow-hotplug wlan0
-iface wlan0 inet manual
-
-# bridge to access internet from wlan (using lan)
-auto br0
-iface br0 inet static
+iface wlan0 inet static
         address 10.0.0.1
         netmask 255.255.255.0
         network 10.0.0.0
         broadcast 10.0.0.255
-        bridge_ports none
-        bridge_fd 1
-        bridge_hello 1
-        bridge_stp on
+
+# bridge to access internet from wlan (using lan)
+#auto br0
+#iface br0 inet static
+#        address 10.0.0.1
+#        netmask 255.255.255.0
+#        network 10.0.0.0
+#        broadcast 10.0.0.255
+#        bridge_ports none
+#        bridge_fd 1
+#        bridge_hello 1
+#        bridge_stp on
 

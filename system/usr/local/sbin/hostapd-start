@@ -10,5 +10,5 @@ if [ ! -d /var/run/hostapd ]; then
 fi
 
 /usr/local/sbin/hostapd -B -P /var/run/hostapd/$INTERFACE.pid /etc/hostapd/hostapd-$INTERFACE.conf
-brctl addif br0 $INTERFACE
+#brctl addif br0 $INTERFACE
 

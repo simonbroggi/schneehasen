@@ -1,5 +1,5 @@
 import time
-import RPi.GPIO as io
+import FakeRPi.GPIO as io
 
 io.setmode(io.BCM)
 

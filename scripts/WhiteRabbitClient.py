@@ -1,11 +1,19 @@
 #!/usr/bin/python
 from PodSixNet.Connection import connection, ConnectionListener
 from time import sleep
-import conf
 import consts
-
+import os
+import sys
+import time
 
 __exitSignal__ = False
+
+
+# use RPi.GPIO if available, otherwise fallback to FakeRPi.GPIO for testing
+try:
+    import RPi.GPIO as io
+except ImportError:
+    import FakeRPi.GPIO as io
 
 
 # generic network listener, used for reconnecting
@@ -30,6 +38,7 @@ class WhiteRabbitClient(ConnectionListener):
         print "connected to the server"
         self.state = consts.STATE_CONNECTED
         self.isConnecting = 0
+        self.send_config()
 
     def Network_disconnected(self, data):
         print "disconnected from the server"
@@ -55,9 +64,28 @@ class WhiteRabbitClient(ConnectionListener):
 
     def reconnect(self):
         # if we get disconnected, only try once per second to re-connect
-        print "no connection or connection lost - trying reconnection in 1s..."
-        sleep(1)
+        print "no connection or connection lost - trying reconnection in %ds..." % conf.NETWORK_CONNECT_RETRY_DELAY
+        sleep(conf.NETWORK_CONNECT_RETRY_DELAY)
         self.connect()
+
+    def send_config(self):
+        self.Send({
+            'action': 'config',
+            'id': conf.CLIENT_ID,
+            'inputs': conf.CLIENT_NUM_INPUTS,
+            'outputs': conf.CLIENT_NUM_OUTPUTS,
+            'inputWeight': conf.CLIENT_WEIGHT_INPUTS,
+            'outputWeight': conf.CLIENT_WEIGHT_OUTPUTS
+        })
+
+    def event_input(self, channel, val):
+        print "input event on channel "+channel+" val="+val+" delegating to master "
+        self.Send({
+            'action': 'in',
+            'id': conf.CLIENT_ID,
+            'channel': channel,
+            'val': val
+        })
 
     def Loop(self):
         self.Pump()
@@ -65,17 +93,50 @@ class WhiteRabbitClient(ConnectionListener):
 
         # test notify master of carrot found
         if self.count == 1000:
-            self.Send({"action": "carrot", "size": "large"})
+            #self.Send({"action": "carrot", "size": "large"})
             self.count = 0
-        self.count = self.count + 1
+        self.count += + 1
 
         if self.state == consts.STATE_DISCONNECTED and not self.isConnecting:
             self.reconnect()
 
-#connection.Send({"action": "ping", "blah": 123, "things": [3, 4, 3, 4, 7]})
-print "Initial connect..."
-client = WhiteRabbitClient('127.0.0.1', 12345)
+
+
+# read configuration (optionally from different script)
+config_file = 'conf'
+if len(sys.argv) == 2:
+    config_file = os.path.basename(sys.argv[1])
+    if config_file[-3:] == ".py":
+        config_file = config_file[:-3]
+
+print "Reading configuration from file ", config_file
+conf = __import__(config_file, globals(), locals(), [])
+
+
+print "Initializing GPIO"
+io.setmode(io.BCM)
+for pin in conf.clientInputMappings:
+    print "- set pin "+str(pin)+" as INPUT"
+    io.setup(pin, io.IN)
+
+for pin in conf.clientOutputMappings:
+    print "- set pin "+str(pin)+" as OUTPUT"
+    io.setup(pin, io.OUT)
+
+
+print "Connecting to master"
+client = WhiteRabbitClient(conf.RABBIT_MASTER, conf.RABBIT_MASTER_PORT)
+
+# delegate input callback to network client
+def event_input_callback(channel):
+    client.event_input(channel, io.input(channel))
+
+print "Adding input callbacks"
+for pin in conf.clientInputMappings:
+    io.add_event_detect(pin, io.BOTH, callback=event_input_callback)
 
 while not __exitSignal__:
     client.Loop()
     sleep(0.001)
+
+io.cleanup()

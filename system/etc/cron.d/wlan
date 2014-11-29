@@ -1,0 +1,2 @@
+* * * * * root pgrep wlan-reconnect.sh || (/etc/network/wlan-reconnect.sh) > /var/log/wlan_reconnect.log 2>&1
+

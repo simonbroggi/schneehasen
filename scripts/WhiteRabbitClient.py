@@ -32,7 +32,8 @@ class WhiteRabbitClient(ConnectionListener):
         self.connect()
 
     def Network(self, data):
-        print 'network data:', data
+        #print 'network data:', data
+        pass
 
     def Network_connected(self, data):
         print "connected to the server"
@@ -50,12 +51,15 @@ class WhiteRabbitClient(ConnectionListener):
         self.state = consts.STATE_DISCONNECTED
         self.isConnecting = 0
 
-    def Network_myaction(data):
-        print "myaction:", data
-
-    def Network_setoutput(data):
+    def Network_setoutput(self, data):
         # set rpi output as the white master wishes
-        print data['outputs']
+        print "set output", data
+
+        index = data['index']
+        val = data['val']
+
+        if 0 <= index < len(conf.clientOutputMappings):
+            io.output(conf.clientOutputMappings[index], val)
 
     def connect(self):
         print "Connecting to "+''.join((self.host, ':'+str(self.port)))

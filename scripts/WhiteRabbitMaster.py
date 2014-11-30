@@ -1,12 +1,18 @@
 #!/usr/bin/python
-from PodSixNet.Channel import Channel
-from PodSixNet.Server import Server
-from time import sleep
 from weakref import WeakKeyDictionary
+import time
 import sys
 import os
 
+from PodSixNet.Channel import Channel
+from PodSixNet.Server import Server
+
+from actions.base import Action
+from actions.states import PrintStateAction
+from actions.simple import SingleSnowHare
+
 # use RPi.GPIO if available, otherwise fallback to FakeRPi.GPIO for testing
+
 try:
     import RPi.GPIO as io
 except ImportError:
@@ -52,12 +58,17 @@ class WhiteRabbitServer(Server):
 
     inputs = {}
     outputs = {}
+    actions = {}
+    virtual_inputs = []
+    virtual_outputs = []
+    framerate = 30
+    last_time = 0
+    current_time = 0
+    delta_time = 0
 
     def __init__(self, *args, **kwargs):
         self.id = conf.CLIENT_ID
-        self.virtual_outputs = []
         Server.__init__(self, *args, **kwargs)
-
         self.clients = WeakKeyDictionary()
         print 'Server launched'
 
@@ -108,17 +119,19 @@ class WhiteRabbitServer(Server):
     # set a new value of an output pin with a virtual index
     # will send value to client
     def set_virtual_out(self, index, val):
-        if index > len(self.virtual_outputs):
+        if index >= len(self.virtual_outputs):
             # na
-            print "output "+index+" not available"
+            print "output "+str(index)+" not available"
+            return
 
-        client_info = self.virtual_outputs[index]
-        client = client_info['client']
+        output_info = self.virtual_outputs[index]
+        output_info['val'] = val
+        client = output_info['client'][0]
 
         # ask client to set the value on the mapped index
         client.Send({
             'action': 'setoutput',
-            'index': client_info['localIndex'],
+            'index': output_info['localIndex'],
             'val': val
         })
 
@@ -133,47 +146,50 @@ class WhiteRabbitServer(Server):
         client_info = self.virtual_inputs[index]
         return client_info['val']
 
-
     def update_input(self, channel, data):
         print 'server update input', data
         index = data['channel']
         val = data['val']
-
-    # builds a readable string of the current output state as seen by the master
-    def get_output_state_string(self):
-        state = ""
-        for out in self.virtual_outputs:
-            if out['val'] > 0:
-                # append magic sign - will probably only work on unicode console ;-)
-                state += '[' + u"\U0001F407" + ']'
-            else:
-                state += "[ ]"
-        return state
-
-    # prints the state of the master to stdout
-    def print_state(self):
-        s = self.get_output_state_string()
-        if s is not None:
-            sys.stdout.write(s+"\r")
+        # TODO: do something useful here!!
 
     def remove_client(self, channel):
         print 'removing client', channel
         del self.clients[channel]
         self.map_clients()
-        
-    def launch(self):
-        timer = 0
-        interval = 0.0001
+
+    def launch(self, stdscr=None, *args, **kwds):
+        #curses.raw()
+
+        print "White Rabbit Master ready"
         while not self.exitSignal:
+            self.current_time = time.time()
+            self.delta_time = self.current_time - self.last_time
+            if self.delta_time >= (1.0/self.framerate):
+                self.run_actions()
+                self.last_time = self.current_time
+
             self.Pump()
 
-            # print state from time to time
-            if timer % 100 == 0:
-                self.print_state()
-                timer = 0
+            # sleep smallest interval possible on system (~1-10ms)
+            time.sleep(0.0001)
 
-            timer += 1
-            sleep(interval)
+    def run_actions(self):
+        ordered_actions = sorted(self.actions.items(), key=lambda x: x[1]['weight'])
+
+        for action in ordered_actions:
+            action[0].update(self.current_time, self.delta_time)
+
+    def register_action(self, action, weight):
+        if not isinstance(action, Action):
+            raise BaseException("action doesn't have base type Action", action)
+
+        self.actions[action] = {
+            'weight': weight
+        }
+        action.registered({'master': self, 'framerate': self.framerate})
+
+    def remove_action(self, action):
+        del self.actions[action]
 
 
 # read configuration (optionally from different script)
@@ -186,9 +202,16 @@ if len(sys.argv) == 2:
 conf = __import__(config_file, globals(), locals(), [])
 print "Using configuration: ", conf
 
+
+
 print "White Rabbit Master initializing"
-#localaddr=(host, int(port))
 server = WhiteRabbitServer(localaddr=(conf.MASTER_IP, conf.MASTER_PORT))
+
+# add actions
+server.register_action(PrintStateAction(), 999)
+server.register_action(SingleSnowHare(), 0)
+
 server.launch()
-print "White Rabbit Master ready"
+#curses.wrapper(lambda stdscr, *args, **kwargs: server.launch(stdscr, args, kwargs))
+
 

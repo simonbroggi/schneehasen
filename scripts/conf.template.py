@@ -14,7 +14,7 @@
 NETWORK_CONNECT_RETRY_DELAY = 3
 
 # information about where to send data
-RABBIT_MASTER = '127.0.0.1'
+RABBIT_MASTER = '10.0.0.1'
 RABBIT_MASTER_PORT = 12345
 
 
@@ -52,5 +52,5 @@ clientOutputMappings = DEFAULT_CLIENT_OUTPUT_MAPPINGS
 #
 # master configuration
 #
-MASTER_IP = '127.0.0.1'
+MASTER_IP = '10.0.0.1'
 MASTER_PORT = 12345

@@ -31,15 +31,18 @@ CLIENT_WEIGHT_INPUTS = 0
 
 # default map for available outputs (with virtual numbering 0..numOutputs)
 # to Raspberry Pi B+ board mapping (BCM)
+#
+# see http://pi4j.com/images/j8header.png
+#
 DEFAULT_CLIENT_OUTPUT_MAPPINGS = [
-    7,  11, 12, 13, 15, 16, 18, 22,
-    29, 31, 32, 33, 35, 36, 37, 38, 40
+    7, 15, 16, 0, 1, 2, 3, 4, 5, 12, 13, 6, 14,
+    10, 11, 21, 22, 26, 24, 27, 25, 28, 29
 ]
 
 # default inputs used on clients (for infrared sensors) - on the master,
 # these will be seen as inputs 0..n
 DEFAULT_CLIENT_INPUT_MAPPINGS = [
-    3,  5
+    8, 9
 ]
 
 clientInputMappings = DEFAULT_CLIENT_INPUT_MAPPINGS

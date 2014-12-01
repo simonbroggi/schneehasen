@@ -19,7 +19,7 @@ class SingleSnowHare(Action):
             self.move(self.start_position)
 
         self.count += 1
-        if float(self.count)/self.framerate >= 0.1:
+        if float(self.count)/self.framerate >= 1:
             self.last_position = self.position
             self.position = (self.position + 1) % len(self.master.virtual_outputs)
             self.move(self.position)

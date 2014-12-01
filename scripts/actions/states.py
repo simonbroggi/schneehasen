@@ -13,7 +13,7 @@ class PrintStateAction(Action):
     def update(self, current_time, delta_time):
         Action.update(self, current_time, delta_time)
         self.count += 1
-        if self.count == 20:
+        if self.count == 10:
             self.count = 0
 
             # print out state of master

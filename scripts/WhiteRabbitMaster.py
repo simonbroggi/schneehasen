@@ -61,7 +61,7 @@ class WhiteRabbitServer(Server):
     actions = {}
     virtual_inputs = []
     virtual_outputs = []
-    framerate = 30
+    framerate = 10
     last_time = 0
     current_time = 0
     delta_time = 0

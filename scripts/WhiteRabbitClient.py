@@ -76,8 +76,8 @@ class WhiteRabbitClient(ConnectionListener):
         self.Send({
             'action': 'config',
             'id': conf.CLIENT_ID,
-            'inputs': conf.CLIENT_NUM_INPUTS,
-            'outputs': conf.CLIENT_NUM_OUTPUTS,
+            'inputs': len(conf.clientInputMappings),
+            'outputs': len(conf.clientOutputMappings), 
             'inputWeight': conf.CLIENT_WEIGHT_INPUTS,
             'outputWeight': conf.CLIENT_WEIGHT_OUTPUTS
         })
@@ -139,8 +139,12 @@ print "Adding input callbacks"
 for pin in conf.clientInputMappings:
     io.add_event_detect(pin, io.BOTH, callback=event_input_callback)
 
-while not __exitSignal__:
-    client.Loop()
-    sleep(0.001)
+try:
+	while not __exitSignal__:
+	    client.Loop()
+	    sleep(0.001)
+except KeyboardInterrupt:
+	__exitSignal__ = True
 
+print "\nExiting with GPIO cleanup"
 io.cleanup()

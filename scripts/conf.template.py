@@ -21,11 +21,6 @@ RABBIT_MASTER_PORT = 12345
 # id for this specific client - must be unique in the network
 CLIENT_ID = 'ROGER'
 
-# number of active inputs this client is providing
-CLIENT_NUM_INPUTS = 0
-
-# number of outputs this client is using
-CLIENT_NUM_OUTPUTS = 18
 
 # clients will be mapped in the master by weight and dynamically
 # assign the input/output slots
@@ -37,19 +32,18 @@ CLIENT_WEIGHT_INPUTS = 0
 # default map for available outputs (with virtual numbering 0..numOutputs)
 # to Raspberry Pi B+ board mapping (BCM)
 DEFAULT_CLIENT_OUTPUT_MAPPINGS = [
-     7,  8, 10, 11, 12, 13, 15, 16, 18, 19, 21,
-    22, 23, 24, 26, 29, 31, 32, 33, 35, 36, 37,
-    38, 40
-];
+    7,  11, 12, 13, 15, 16, 18, 22,
+    29, 31, 32, 33, 35, 36, 37, 38, 40
+]
 
 # default inputs used on clients (for infrared sensors) - on the master,
 # these will be seen as inputs 0..n
 DEFAULT_CLIENT_INPUT_MAPPINGS = [
-   3,  5
-];
+    3,  5
+]
 
-clientInputMappings = DEFAULT_CLIENT_INPUT_MAPPINGS;
-clientOutputMappings = DEFAULT_CLIENT_OUTPUT_MAPPINGS;
+clientInputMappings = DEFAULT_CLIENT_INPUT_MAPPINGS
+clientOutputMappings = DEFAULT_CLIENT_OUTPUT_MAPPINGS
 
 
 #

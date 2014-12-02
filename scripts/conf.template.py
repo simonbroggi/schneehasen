@@ -32,7 +32,8 @@ CLIENT_WEIGHT_INPUTS = 0
 # default map for available outputs (with virtual numbering 0..numOutputs)
 # to Raspberry Pi B+ board mapping (BCM)
 #
-# see http://pi4j.com/images/j8header.png
+# http://pi4j.com/images/j8header.png seems to be wrong for B+
+# see http://raspberrypi.stackexchange.com/questions/12966/what-is-the-difference-between-board-and-bcm-for-gpio-pin-numbering
 #
 DEFAULT_CLIENT_OUTPUT_MAPPINGS = [
     7, 15, 16, 0, 1, 2, 3, 4, 5, 12, 13, 6, 14,

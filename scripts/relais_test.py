@@ -5,7 +5,7 @@ relais = [7, 11, 12, 13, 15, 16, 18, 22, 29, 31, 32, 33, 35, 36, 37, 38]
 
 io.setmode(io.BOARD)
 
-print('testing relais ' + relais)
+print('testing relais ', relais)
 
 #for r in relais:
 #    print('setting %i' %r)

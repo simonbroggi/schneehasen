@@ -10,6 +10,8 @@ from PodSixNet.Server import Server
 from actions.base import Action
 from actions.states import PrintStateAction
 from actions.simple import SingleSnowHare
+from actions.multipath import MultipathHares
+
 
 # use RPi.GPIO if available, otherwise fallback to FakeRPi.GPIO for testing
 
@@ -209,7 +211,8 @@ server = WhiteRabbitServer(localaddr=(conf.MASTER_IP, conf.MASTER_PORT))
 
 # add actions
 server.register_action(PrintStateAction(), 999)
-server.register_action(SingleSnowHare(), 0)
+#server.register_action(SingleSnowHare(), 0)
+server.register_action(MultipathHares(), 0)
 
 server.launch()
 #curses.wrapper(lambda stdscr, *args, **kwargs: server.launch(stdscr, args, kwargs))

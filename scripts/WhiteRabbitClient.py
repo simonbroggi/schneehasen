@@ -5,6 +5,8 @@ import consts
 import os
 import sys
 import time
+import sys
+import select
 
 __exitSignal__ = False
 
@@ -53,11 +55,9 @@ class WhiteRabbitClient(ConnectionListener):
 
     def Network_setoutput(self, data):
         # set rpi output as the white master wishes
-        print "set output", data
-
         index = data['index']
         val = data['val']
-
+        print time.time(), "set output ", index, ' to ', val
         if 0 <= index < len(conf.clientOutputMappings):
             io.output(conf.clientOutputMappings[index], val)
 
@@ -83,13 +83,30 @@ class WhiteRabbitClient(ConnectionListener):
         })
 
     def event_input(self, channel, val):
-        print "input event on channel "+channel+" val="+val+" delegating to master "
+        print "input event on channel ", channel, " val=", val, " delegating to master "
         self.Send({
-            'action': 'in',
-            'id': conf.CLIENT_ID,
+            'action': 'input',
             'channel': channel,
             'val': val
         })
+
+    def check_keyboard_commands(self):
+        r, w, x = select.select([sys.stdin], [], [], 0.0001)
+        for s in r:
+            if s == sys.stdin:
+                input = sys.stdin.readline()
+                if input.lower().startswith('i'):
+                    try:
+                        # simulate input (format: "i2.1" => set input 2 to 1
+                        channel = input[1:input.index('.')]
+                        val = int(input[input.index('.')+1:])
+                        print "simulate input value: channel=", channel, " val=", val
+                        self.event_input(channel, val)
+                    except:
+                        print 'Unknown command'
+
+                return True
+        return False
 
     def Loop(self):
         self.Pump()
@@ -103,7 +120,6 @@ class WhiteRabbitClient(ConnectionListener):
 
         if self.state == consts.STATE_DISCONNECTED and not self.isConnecting:
             self.reconnect()
-
 
 
 # read configuration (optionally from different script)
@@ -140,11 +156,12 @@ for pin in conf.clientInputMappings:
     io.add_event_detect(pin, io.BOTH, callback=event_input_callback)
 
 try:
-	while not __exitSignal__:
-	    client.Loop()
-	    sleep(0.001)
+    while not __exitSignal__:
+        client.check_keyboard_commands()
+        client.Loop()
+        sleep(0.001)
 except KeyboardInterrupt:
-	__exitSignal__ = True
+    __exitSignal__ = True
 
 print "\nExiting with GPIO cleanup"
 io.cleanup()

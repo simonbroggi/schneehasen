@@ -10,7 +10,7 @@ from PodSixNet.Server import Server
 from actions.base import Action
 from actions.states import PrintStateAction
 from actions.simple import SingleSnowHare
-from actions.multipath import MultipathHares
+from actions.multipath import MultipathBase
 
 
 # use RPi.GPIO if available, otherwise fallback to FakeRPi.GPIO for testing
@@ -47,7 +47,7 @@ class RabbitHole(Channel):
         print "rabbit got carrot", data
 
     def Network_input(self, data):
-        print "received input from client "+data
+        print "received input from client ", data
         self._server.update_input(self, data)
 
     def Close(self):
@@ -148,11 +148,22 @@ class WhiteRabbitServer(Server):
         client_info = self.virtual_inputs[index]
         return client_info['val']
 
-    def update_input(self, channel, data):
-        print 'server update input', data
-        index = data['channel']
+    def update_input(self, client, data):
+        print 'server update input', client, data
+        local_index = int(data['channel'])
         val = data['val']
-        # TODO: do something useful here!!
+        print 'local_index', local_index, 'val', val
+
+        # map local input to virtualized inputs
+        for i,_ in enumerate(self.virtual_inputs):
+            print(_['client'][0], _['localIndex'])
+
+        matches = [i for i,_ in enumerate(self.virtual_inputs)
+                 if (_['client'][0] == client and _['localIndex'] == local_index)]
+
+        if len(matches) > 0:
+            print 'setting input ', self.virtual_inputs[matches[0]], ' to val=', val
+            self.virtual_inputs[matches[0]]['val'] = val
 
     def remove_client(self, channel):
         print 'removing client', channel
@@ -160,8 +171,6 @@ class WhiteRabbitServer(Server):
         self.map_clients()
 
     def launch(self, stdscr=None, *args, **kwds):
-        #curses.raw()
-
         print "White Rabbit Master ready"
         while not self.exitSignal:
             self.current_time = time.time()
@@ -212,9 +221,7 @@ server = WhiteRabbitServer(localaddr=(conf.MASTER_IP, conf.MASTER_PORT))
 # add actions
 server.register_action(PrintStateAction(), 999)
 #server.register_action(SingleSnowHare(), 0)
-server.register_action(MultipathHares(), 0)
+server.register_action(MultipathBase(), 0)
 
 server.launch()
-#curses.wrapper(lambda stdscr, *args, **kwargs: server.launch(stdscr, args, kwargs))
-
 

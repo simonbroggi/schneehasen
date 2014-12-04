@@ -11,6 +11,7 @@ class Action(object):
 
         self.master = None
         """:type : WhiteRabbitServer"""
+        self.shadow_inputs = None
 
     def registered(self, options):
         self.options = options
@@ -18,6 +19,7 @@ class Action(object):
         # shortcuts
         self.framerate = options['framerate']
         self.master = options['master']
+        self.shadow_inputs = self.master.virtual_inputs[:]
 
     def set_output(self, index, val):
         self.master.set_virtual_out(index, val)

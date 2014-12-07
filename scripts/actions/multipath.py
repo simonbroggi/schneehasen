@@ -1,13 +1,14 @@
 from base import Action
 import csv
 import random
+import time
 
 class MultipathBase(Action):
     """
     Complex multi-hare, multi-path simulation where hares can be created either by
     stimulating input or by absence of input.
     """
-    def __init__(self, config='multipath-config.csv'):
+    def __init__(self, config='multipath-config.csv', use_inputs=[0, 1]):
         Action.__init__(self)
 
         # read path configuration
@@ -19,6 +20,7 @@ class MultipathBase(Action):
         self.DEBUG = False
         self.moves = []
         self.remove_hares = []
+        self.use_inputs = use_inputs
 
         if self.DEBUG:
             print self.matrix
@@ -54,9 +56,11 @@ class MultipathBase(Action):
         :param val:
         :return:
         """
-        print 'event_input_changed', num, val
-        if num == 0 and val > 0:
+        print time.time(), 'event_input_changed', num, val
+        if num in set(self.use_inputs) and val > 0:
             speed_factor = random.random()
+            # temp for safer debugging
+            speed_factor = 1.0
             hare = (0, self.timer * speed_factor)
             self.hares += [hare]
 
@@ -113,6 +117,8 @@ class MultipathBase(Action):
             for target, p in self.matrix[str(pos)]:
                 if self.DEBUG:
                     print 'p', p, 'target', target, 'rsum', prob_sum, 'rnd', rnd
+                # there are two ways of removing a hare, either go to step 'OFF'
+                # or set probability to OFF
                 if str(p).upper() == 'OFF':
                     decision = -1
                     # remove hare
@@ -129,6 +135,9 @@ class MultipathBase(Action):
             if pos != decision:
                 if self.DEBUG:
                     print 'move from', pos, decision
+                if decision.upper() == 'OFF':
+                    decision = -1
+                    self.remove_hares += [hare_num]
                 decision = self.prepare_move_hare(int(pos), int(decision))
 
             # save decision, reset timer
@@ -151,13 +160,15 @@ class MultipathBase(Action):
         Consolidates moves (a hare might move to a position that was just left) and send outputs.
         :return:
         """
-        positions_left = []
+        positions_old = []
         positions_new = []
         for m in self.moves:
-            positions_left += [m[0]]
-            positions_new += [m[1]]
+            if m[0] != -1:
+                positions_old += [m[0]]
+            if m[1] != -1:
+                positions_new += [m[1]]
 
-        for i in set(positions_left) - set(positions_new):
+        for i in set(positions_old) - set(positions_new):
             self.set_output(i, 0)
 
         for i in positions_new:
@@ -165,3 +176,5 @@ class MultipathBase(Action):
                 self.set_output(i, 1)
 
         self.moves = []
+
+

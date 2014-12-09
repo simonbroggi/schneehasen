@@ -226,7 +226,9 @@ server = WhiteRabbitServer(localaddr=(conf.MASTER_IP, conf.MASTER_PORT))
 server.register_action(PrintStateAction(), 999)
 #server.register_action(SingleSnowHare(), 0)
 server.register_action(MultipathBase('multipath-left-right.csv'), 0)
-server.register_action(IdleAnimation('multipath-left-right.csv'), 1)
+server.register_action(IdleAnimation('multipath-idle.csv'), 1)
+
+# TODO: consolidate outputs (how?)
 
 server.launch()
 

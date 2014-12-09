@@ -182,7 +182,7 @@ class MultipathBase(Action):
 
 
 class IdleAnimation(MultipathBase):
-    def __init__(self, config='multipath-config.csv', use_inputs=[0, 1]):
+    def __init__(self, config='multipath-idle.csv', use_inputs=[0, 1]):
         MultipathBase.__init__(self, config, use_inputs)
         self.idleEvaluationTime = 2 * self.framerate # every 1s
         self.idleTimer = self.idleEvaluationTime

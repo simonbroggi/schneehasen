@@ -184,13 +184,22 @@ class MultipathBase(Action):
 class IdleAnimation(MultipathBase):
     def __init__(self, config='multipath-config.csv', use_inputs=[0, 1]):
         MultipathBase.__init__(self, config, use_inputs)
-        self.timerInit = 1 * self.framerate # every 1s
-        self.timer = self.timerInit
-        self.prob = 0.5
+        self.idleEvaluationTime = 2 * self.framerate # every 1s
+        self.idleTimer = self.idleEvaluationTime
+        self.prob = 0.1
 
     def update(self, current_time, delta_time):
-        self.timer -= 1
-        if self.timer == 0:
-            if random.random() <= self.prob:
+        if len(self.master.virtual_outputs) == 0:
+            return
+
+        self.idleTimer -= 1
+        if self.idleTimer == 0:
+            if random.random() <= self.prob and len(self.hares) < 5:
+                print "idle: launch a rabbit"
                 speed_factor = random.random() + 0.1
                 self.hares += [(0, self.timer, speed_factor)]
+                print self.hares
+
+            self.idleTimer = self.idleEvaluationTime
+
+        MultipathBase.update(self, current_time, delta_time)

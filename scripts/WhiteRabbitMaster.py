@@ -11,6 +11,7 @@ from actions.base import Action
 from actions.states import PrintStateAction
 from actions.simple import SingleSnowHare
 from actions.multipath import MultipathBase
+from actions.multipath import IdleAnimation
 
 
 # use RPi.GPIO if available, otherwise fallback to FakeRPi.GPIO for testing
@@ -225,6 +226,7 @@ server = WhiteRabbitServer(localaddr=(conf.MASTER_IP, conf.MASTER_PORT))
 server.register_action(PrintStateAction(), 999)
 #server.register_action(SingleSnowHare(), 0)
 server.register_action(MultipathBase('multipath-left-right.csv'), 0)
+server.register_action(IdleAnimation('multipath-left-right.csv'), 1)
 
 server.launch()
 

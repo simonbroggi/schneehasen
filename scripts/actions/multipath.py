@@ -151,6 +151,9 @@ class MultipathBase(Action):
                 print 'pos truncated to', pos % len(self.master.virtual_outputs)
             npos %= len(self.master.virtual_outputs)
 
+        if last_position >= len(self.master.virtual_outputs):
+            print 'last_pos truncated to', last_position % len(self.master.virtual_outputs)
+            last_position %= len(self.master.virtual_outputs)
 
         self.moves += [(last_position, npos)]
         return pos

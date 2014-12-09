@@ -141,7 +141,7 @@ for pin in conf.clientInputMappings:
 
 for pin in conf.clientOutputMappings:
     print "- set pin "+str(pin)+" as OUTPUT"
-    io.setup(pin, io.OUT)
+    io.setup(pin, io.OUT,  initial=GPIO.LOW)
 
 
 print "Connecting to master"

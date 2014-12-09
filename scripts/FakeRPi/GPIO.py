@@ -28,7 +28,7 @@ def setmode(mode):
         gpiomode = mode
     return
 
-def setup(channel, inout, pull_up_down=PUD_OFF):
+def setup(channel, inout, initial=LOW):
     global direction
     if gpiomode == MODE_UNKNOWN:
         print("Set mode first!")

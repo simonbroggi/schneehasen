@@ -63,7 +63,7 @@ class WhiteRabbitServer(Server):
     actions = {}
     virtual_inputs = []
     virtual_outputs = []
-    framerate = 10
+    framerate = 20
     last_time = 0
     current_time = 0
     delta_time = 0
@@ -106,6 +106,9 @@ class WhiteRabbitServer(Server):
                     'localIndex': i,
                     'val': None
                 }]
+
+        for output in self.virtual_outputs:
+            print output
 
         # generate virtual map of all available inputs
         ordered_clients = sorted(self.clients.items(), key=lambda x: x[1]['inputWeight'])

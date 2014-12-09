@@ -60,8 +60,8 @@ class MultipathBase(Action):
         if num in set(self.use_inputs) and val > 0:
             speed_factor = random.random()
             # temp for safer debugging
-            speed_factor = 1.0
-            hare = (0, self.timer * speed_factor)
+            speed_factor = 1.5
+            hare = (0, self.timer * speed_factor, speed_factor)
             self.hares += [hare]
 
             # set new hare
@@ -101,12 +101,12 @@ class MultipathBase(Action):
 
 
     def calculate_step(self, hare_num, current_time):
-        (pos, count) = self.hares[hare_num]
+        (pos, count, speed_factor) = self.hares[hare_num]
         if self.DEBUG:
             print 'move hare ', hare_num, 'currently at ', pos, 'timer', count
         if count > 0:
             # decrease time counter for this hare
-            self.hares[hare_num] = (pos, count - 1)
+            self.hares[hare_num] = (pos, count - 1, speed_factor)
         else:
             # calculate probable move (no move=stay)
             rnd = random.uniform(0, 1)
@@ -141,7 +141,7 @@ class MultipathBase(Action):
                 decision = self.prepare_move_hare(int(pos), int(decision))
 
             # save decision, reset timer
-            self.hares[hare_num] = (int(decision), self.timer)
+            self.hares[hare_num] = (int(decision), self.timer * speed_factor, speed_factor)
 
     def prepare_move_hare(self, last_position, pos):
         # wrap-around if less outputs
@@ -181,3 +181,16 @@ class MultipathBase(Action):
         self.moves = []
 
 
+class IdleAnimation(MultipathBase):
+    def __init__(self, config='multipath-config.csv', use_inputs=[0, 1]):
+        MultipathBase.__init__(self, config, use_inputs)
+        self.timerInit = 1 * self.framerate # every 1s
+        self.timer = self.timerInit
+        self.prob = 0.5
+
+    def update(self, current_time, delta_time):
+        self.timer -= 1
+        if self.timer == 0:
+            if random.random() <= self.prob:
+                speed_factor = random.random() + 0.1
+                self.hares += [(0, self.timer, speed_factor)]

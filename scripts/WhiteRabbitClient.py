@@ -49,7 +49,7 @@ class WhiteRabbitClient(ConnectionListener):
         self.isConnecting = 0
 
     def Network_error(self, data):
-        print "error:", data['error'][1]
+        #print "error:", data['error'][1]
         self.state = consts.STATE_DISCONNECTED
         self.isConnecting = 0
 
@@ -57,18 +57,18 @@ class WhiteRabbitClient(ConnectionListener):
         # set rpi output as the white master wishes
         index = data['index']
         val = data['val']
-        print time.time(), "set output ", index, ' to ', val
+        #print time.time(), "set output ", index, ' to ', val
         if 0 <= index < len(conf.clientOutputMappings):
             io.output(conf.clientOutputMappings[index], val)
 
     def connect(self):
-        print "Connecting to "+''.join((self.host, ':'+str(self.port)))
+        #print "Connecting to "+''.join((self.host, ':'+str(self.port)))
         self.isConnecting = 1
         self.Connect((self.host, self.port))
 
     def reconnect(self):
         # if we get disconnected, only try once per second to re-connect
-        print "no connection or connection lost - trying reconnection in %ds..." % conf.NETWORK_CONNECT_RETRY_DELAY
+        #print "no connection or connection lost - trying reconnection in %ds..." % conf.NETWORK_CONNECT_RETRY_DELAY
         sleep(conf.NETWORK_CONNECT_RETRY_DELAY)
         self.connect()
 
@@ -149,7 +149,9 @@ client = WhiteRabbitClient(conf.RABBIT_MASTER, conf.RABBIT_MASTER_PORT)
 
 # delegate input callback to network client
 def event_input_callback(channel):
-    client.event_input(channel, io.input(channel))
+	channelIndex = conf.clientInputMappings.index(channel)
+	if channelIndex >= 0:
+	    client.event_input(channelIndex, io.input(channel))
 
 print "Adding input callbacks"
 for pin in conf.clientInputMappings:

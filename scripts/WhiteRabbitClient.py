@@ -149,8 +149,8 @@ client = WhiteRabbitClient(conf.RABBIT_MASTER, conf.RABBIT_MASTER_PORT)
 
 # delegate input callback to network client
 def event_input_callback(channel):
-	channelIndex = conf.clientInputMappings.index(channel)
-	if channelIndex >= 0:
+    channelIndex = conf.clientInputMappings.index(channel)
+    if channelIndex >= 0:
 	    client.event_input(channelIndex, io.input(channel))
 
 print "Adding input callbacks"

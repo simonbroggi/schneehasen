@@ -61,11 +61,11 @@ class MultipathBase(Action):
             speed_factor = random.random()
             # temp for safer debugging
             speed_factor = 1.5
-            hare = (0, self.timer * speed_factor, speed_factor)
+            hare = ('START', self.timer * speed_factor, speed_factor)
             self.hares += [hare]
 
             # set new hare
-            self.prepare_move_hare(-1, hare[0])
+            #self.prepare_move_hare(-1, hare[0])
             print self.hares
 
     def update(self, current_time, delta_time):
@@ -99,12 +99,11 @@ class MultipathBase(Action):
 
         self.remove_hares = []
 
-
     def calculate_step(self, hare_num, current_time):
         (pos, count, speed_factor) = self.hares[hare_num]
         if self.DEBUG:
             print 'move hare ', hare_num, 'currently at ', pos, 'timer', count
-        if count > 0:
+        if count > 0 and type(pos) is int:
             # decrease time counter for this hare
             self.hares[hare_num] = (pos, count - 1, speed_factor)
         else:
@@ -138,12 +137,20 @@ class MultipathBase(Action):
                 if decision.upper() == 'OFF':
                     decision = -1
                     self.remove_hares += [hare_num]
-                decision = self.prepare_move_hare(int(pos), int(decision))
+
+                decision = self.prepare_move_hare(pos, int(decision))
 
             # save decision, reset timer
             self.hares[hare_num] = (int(decision), self.timer * speed_factor, speed_factor)
 
     def prepare_move_hare(self, last_position, pos):
+        print 'prepare_move_hare',last_position, pos
+        if type(last_position) is str and last_position.lower() == 'start':
+            last_position = -1
+
+        last_position = int(last_position)
+        pos = int(pos)
+
         # wrap-around if less outputs
         npos = pos
         if pos >= len(self.master.virtual_outputs):

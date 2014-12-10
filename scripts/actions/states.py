@@ -32,7 +32,8 @@ class PrintStateAction(Action):
         for out in self.master.virtual_outputs:
             if out['val'] > 0:
                 # append magic sign - will probably only work on unicode console ;-)
-                state += '[' + u"\U0001F407" + ']'
+                #state += '[' + u"\U0001F407" + ']'
+		state += '[x]'
             else:
                 state += "[ ]"
 

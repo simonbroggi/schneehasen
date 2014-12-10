@@ -21,9 +21,16 @@ class MultipathBase(Action):
         self.moves = []
         self.remove_hares = []
         self.use_inputs = use_inputs
+        self.input_activation_delay = 0
+        self.input_activation_timer = 0
 
         if self.DEBUG:
             print self.matrix
+
+    def registered(self, options):
+        Action.registered(self, options)
+        self.input_activation_delay = self.get_activation_delay()
+        print 'registered input activation delay in s', self.input_activation_delay
 
     @staticmethod
     def read_config(filename):
@@ -60,13 +67,18 @@ class MultipathBase(Action):
         if num in set(self.use_inputs) and val > 0:
             speed_factor = random.random()
             # temp for safer debugging
-            speed_factor = 1.5
-            hare = (0, self.timer * speed_factor, speed_factor)
+            speed_factor = self.master.conf.DEFAULT_SPEED_FACTOR # 1.5
+            hare = ('START', self.timer * speed_factor, speed_factor)
             self.hares += [hare]
 
             # set new hare
-            self.prepare_move_hare(-1, hare[0])
+            #self.prepare_move_hare(-1, hare[0])
             print self.hares
+
+    def get_activation_delay(self):
+        val = random.randrange(self.master.conf.INPUT_ACTIVATION_DELAY[0], self.master.conf.INPUT_ACTIVATION_DELAY[1]) * self.framerate
+        print 'new activation delay:', val
+        return val
 
     def update(self, current_time, delta_time):
         # only run update if there are have outputs
@@ -79,9 +91,18 @@ class MultipathBase(Action):
                 if self.shadow_inputs[i]['val'] != v['val']:
                     self.event_input_changed(i, v['val'])
                     self.shadow_inputs[i] = v.copy()
+                    self.input_activation_timer = self.get_activation_delay()
+                elif self.input_activation_delay > 0:
+                    if self.input_activation_timer <= 0:
+                        print self.input_activation_timer
+                        self.input_activation_timer = self.get_activation_delay()
+                        self.event_input_changed(i, v['val'])
         else:
             # reconfigure shadow_inputs array
             self.shadow_inputs = [{'val': None}] * len(self.master.virtual_inputs)
+
+        if self.input_activation_delay > 0:
+            self.input_activation_timer -= 1
 
         # move each hare
         if self.DEBUG:
@@ -99,12 +120,11 @@ class MultipathBase(Action):
 
         self.remove_hares = []
 
-
     def calculate_step(self, hare_num, current_time):
         (pos, count, speed_factor) = self.hares[hare_num]
         if self.DEBUG:
             print 'move hare ', hare_num, 'currently at ', pos, 'timer', count
-        if count > 0:
+        if count > 0 and type(pos) is int:
             # decrease time counter for this hare
             self.hares[hare_num] = (pos, count - 1, speed_factor)
         else:
@@ -138,12 +158,20 @@ class MultipathBase(Action):
                 if decision.upper() == 'OFF':
                     decision = -1
                     self.remove_hares += [hare_num]
-                decision = self.prepare_move_hare(int(pos), int(decision))
+
+                decision = self.prepare_move_hare(pos, int(decision))
 
             # save decision, reset timer
             self.hares[hare_num] = (int(decision), self.timer * speed_factor, speed_factor)
 
     def prepare_move_hare(self, last_position, pos):
+        print 'prepare_move_hare',last_position, pos
+        if type(last_position) is str and last_position.lower() == 'start':
+            last_position = -1
+
+        last_position = int(last_position)
+        pos = int(pos)
+
         # wrap-around if less outputs
         npos = pos
         if pos >= len(self.master.virtual_outputs):

@@ -93,10 +93,16 @@ class MultipathBase(Action):
                     self.shadow_inputs[i] = v.copy()
                     self.input_activation_timer = self.get_activation_delay()
                 elif self.input_activation_delay > 0:
-                    if self.input_activation_timer <= 0:
+                    """
+                    input didn't change and activation delay is set
+                    """
+                    if (i in set(self.use_inputs)) and (self.input_activation_timer <= 0):
                         print self.input_activation_timer
-                        self.input_activation_timer = self.get_activation_delay()
                         self.event_input_changed(i, v['val'])
+
+            # reset timer after all inputs have been notified
+            if (self.input_activation_delay > 0) and (self.input_activation_timer <= 0):
+                self.input_activation_timer = self.get_activation_delay()
         else:
             # reconfigure shadow_inputs array
             self.shadow_inputs = [{'val': None}] * len(self.master.virtual_inputs)
@@ -210,24 +216,43 @@ class MultipathBase(Action):
 
 
 class IdleAnimation(MultipathBase):
-    def __init__(self, config='multipath-idle.csv', use_inputs=[0, 1]):
+    def __init__(self, config='multipath-idle.csv', use_inputs=[]):
         MultipathBase.__init__(self, config, use_inputs)
-        self.idleEvaluationTime = 2 * self.framerate # every 1s
+        self.idleEvaluationTime = self.framerate # every 1s
         self.idleTimer = self.idleEvaluationTime
         self.prob = 0.1
 
+    def event_input_changed(self, num, val):
+        pass
+
+    def registered(self, options):
+        MultipathBase.registered(self, options)
+        self.idleEvaluationTime = self.master.conf.IDLE_EVALUATION_DELAY * self.framerate
+
     def update(self, current_time, delta_time):
+        MultipathBase.update(self, current_time, delta_time)
+
         if len(self.master.virtual_outputs) == 0:
             return
 
         self.idleTimer -= 1
-        if self.idleTimer == 0:
-            if random.random() <= self.prob and len(self.hares) < 5:
-                print "idle: launch a rabbit"
-                speed_factor = random.random() + 0.1
-                self.hares += [(0, self.timer, speed_factor)]
+        if self.idleTimer <= 0:
+            # idle timer is up - check inputs used
+            has_input = False
+            for i in self.use_inputs:
+                if self.master.virtual_inputs[i]['val'] > 0:
+                    has_input = True
+
+            if has_input:
+                print "IDLE: timer up but has input - not triggering hare -----"
+
+            trigger = random.random() <= self.master.conf.IDLE_PROBABILITY
+            if (not has_input) and trigger and (len(self.hares) < self.master.conf.IDLE_LIMIT):
+                print "--> IDLE: launch a rabbit"
+                speed_factor = random.uniform(0.01, 3.0)
+                self.hares += [('START', self.timer, speed_factor)]
                 print self.hares
 
             self.idleTimer = self.idleEvaluationTime
 
-        MultipathBase.update(self, current_time, delta_time)
+

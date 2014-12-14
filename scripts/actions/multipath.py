@@ -68,6 +68,8 @@ class MultipathBase(Action):
             speed_factor = random.random()
             # temp for safer debugging
             speed_factor = self.master.conf.DEFAULT_SPEED_FACTOR # 1.5
+            # changed 2014-12-13
+            speed_factor = random.uniform(0.8, 2.0)
             hare = ('START', self.timer * speed_factor, speed_factor)
             self.hares += [hare]
 
@@ -240,7 +242,7 @@ class IdleAnimation(MultipathBase):
             # idle timer is up - check inputs used
             has_input = False
             for i in self.use_inputs:
-                if self.master.virtual_inputs[i]['val'] > 0:
+                if (i < len(self.master.virtual_inputs)) and (self.master.virtual_inputs[i]['val'] > 0):
                     has_input = True
 
             if has_input:
@@ -249,7 +251,7 @@ class IdleAnimation(MultipathBase):
             trigger = random.random() <= self.master.conf.IDLE_PROBABILITY
             if (not has_input) and trigger and (len(self.hares) < self.master.conf.IDLE_LIMIT):
                 print "--> IDLE: launch a rabbit"
-                speed_factor = random.uniform(0.01, 3.0)
+                speed_factor = random.uniform(0.5, 2.5)
                 self.hares += [('START', self.timer, speed_factor)]
                 print self.hares
 

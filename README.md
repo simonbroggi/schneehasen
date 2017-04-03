@@ -18,3 +18,4 @@ In den Verstecken werden Sensoren angebracht die via mini Computer (Raspberry Pi
 
 ![firstBox](https://raw.githubusercontent.com/simonbroggi/schneehasen/master/doku/first_box_with_light.jpg)
 ![firstRabbit](https://raw.githubusercontent.com/simonbroggi/schneehasen/master/doku/first_rabbit.jpg)
+![finished_overview](https://github.com/simonbroggi/schneehasen/blob/master/doku/schneehasen_finished_overview.jpg)

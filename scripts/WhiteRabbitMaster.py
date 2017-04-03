@@ -10,6 +10,7 @@ from PodSixNet.Server import Server
 from actions.base import Action
 from actions.states import PrintStateAction
 from actions.simple import SingleSnowHare
+from actions.all import AllSnowHares
 from actions.multipath import MultipathBase
 from actions.multipath import IdleAnimation
 
@@ -23,7 +24,7 @@ except ImportError:
 
 
 """
-LENZERHEIDE ZAUBERWALD 2014 * SCHNEEHASEN
+LENZERHEIDE ZAUBERWALD 2014 * SCHNEEHASEN + some updates for Stadionbrache 2016
 
 The white rabbit master is the main controller for the snow rabbit installation.
 All clients connect to this master and send their inputs. The master decides upon
@@ -229,9 +230,10 @@ server = WhiteRabbitServer(localaddr=(conf.MASTER_IP, conf.MASTER_PORT), conf=co
 # add actions
 server.register_action(PrintStateAction(), 999)
 #server.register_action(SingleSnowHare(), 0)
-server.register_action(MultipathBase(config='multipath-left.csv', use_inputs=[0]), 0)
-server.register_action(MultipathBase(config='multipath-right.csv', use_inputs=[1]), 1)
-server.register_action(IdleAnimation('multipath-idle.csv', use_inputs=[0,1]), 2)
+server.register_action(AllSnowHares(), 3)
+#server.register_action(MultipathBase(config='multipath-left.csv', use_inputs=[0]), 0)
+#server.register_action(MultipathBase(config='multipath-right.csv', use_inputs=[1]), 1)
+server.register_action(IdleAnimation('multipath-idle-stadionbrache.csv', use_inputs=[0,1]), 2)
 
 # TODO: consolidate outputs (how?)
 
